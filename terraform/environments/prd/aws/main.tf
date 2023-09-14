@@ -8,8 +8,7 @@ terraform {
 }
 
 provider "aws" {
-  region  = "eu-west-3"
-  profile = "bpzb"
+  region = "eu-west-3"
 }
 
 

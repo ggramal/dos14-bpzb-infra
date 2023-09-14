@@ -8,5 +8,5 @@ credentials=$(aws sts assume-role --role-arn arn:aws:iam::546240550610:role/Admi
 export AWS_ACCESS_KEY_ID=$(echo $credentials | jq --raw-output '.Credentials.AccessKeyId')
 export AWS_SECRET_ACCESS_KEY=$(echo $credentials | jq --raw-output '.Credentials.SecretAccessKey')
 export AWS_SESSION_TOKEN=$(echo $credentials | jq '.Credentials.SessionToken')
-#terraform plan
-
+#terraform -chdir="./terraform/environments/prd/aws/" plan
+#terraform -chdir="./terraform/environments/prd/aws/" console

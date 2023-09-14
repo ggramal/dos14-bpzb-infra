@@ -36,4 +36,8 @@ aws_credentials+=("aws_secret_access_key = $SECRET_ACCESS_KEY")
 aws_credentials+=("aws_session_token = $SESSION_TOKEN")
 # write template to  ~/.aws/credentials
 for i in "${aws_credentials[@]}"; do echo "$i" >> ~/.aws/credentials; done
-
+echo ""
+echo ""
+echo "Please, execute this command: export AWS_PROFILE=bpzb"
+echo ""
+echo ""

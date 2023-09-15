@@ -19,8 +19,6 @@ echo ""
 echo "To use new profile you need use aws with '--profile bpzb'"
 echo "For example: aws --profile bpzb sts get-caller-identity"
 echo ""
-echo "To use new profile in terraform you need write 'profile = "bpzb"' in 'provider "aws"' to ../main.tf"
-echo ""
 # check exist name
 if grep -Fxq "[bpzb]" ~/.aws/credentials
 then

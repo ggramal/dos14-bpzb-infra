@@ -5,6 +5,12 @@ terraform {
       version = "5.11.0"
     }
   }
+  backend "s3" {
+    bucket         = "dos14-tf-state"
+    key            = "bpzb/prd/aws/state.tfstate"
+    dynamodb_table = "tf_state_bpzb"
+    region         = "eu-central-1"
+  }
 }
 
 provider "aws" {

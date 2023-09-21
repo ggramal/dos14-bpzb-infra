@@ -8,6 +8,26 @@ variable "cidr_block" {
   type        = string
 }
 
+variable "route_nat_gw" {
+  description = "nat for route table for private subnets"
+  type        = string
+}
+
+variable "eip_name" {
+  description = "Elastic IP name for nat"
+  type        = string
+}
+
+variable "enable_dns_hostnames" {
+  description = "enable/disable DNS hostnames in the VPC"
+  type        = bool
+}
+
+variable "route_cidr" {
+  description = "route cidr block"
+  type        = string
+}
+
 variable "nat_gws" {
   description = "nat gateways"
   type = map(

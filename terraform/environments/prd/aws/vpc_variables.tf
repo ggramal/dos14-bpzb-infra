@@ -1,4 +1,5 @@
 locals {
+  aws_region = "eu-west-3"
   vpcs = {
     bpzb-tf = {
       name                 = "bpzb-tf"

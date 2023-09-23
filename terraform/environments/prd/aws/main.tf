@@ -14,7 +14,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "eu-west-3"
+  region = local.aws_region
 }
 
 module "vpcs" {
@@ -31,25 +31,3 @@ module "vpcs" {
   internet_gw_name     = each.value.internet_gw_name
   nat_gws              = each.value.nat_gws
 }
-
-
-
-
-
-
-#data "aws_ami" "ubuntu" {
-#  most_recent = true
-#
-#  filter {
-#    name   = "name"
-#    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64*"]
-#  }
-#  filter {
-#    name   = "virtualization-type"
-#    values = ["hvm"]
-#  }
-#  owners = ["099720109477"] # Canonical
-#}
-
-
-

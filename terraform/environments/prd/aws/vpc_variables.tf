@@ -16,19 +16,22 @@ locals {
       internet_gw_name = "igw-tf"
       subnets_public = {
         public-subnet1 = {
-          cidr              = "10.0.1.0/24"
-          availability_zone = "eu-west-3a"
-          name              = "bpzb-public-eu-west3a-tf"
+          cidr                = "10.0.1.0/24"
+          availability_zone   = "eu-west-3a"
+          name                = "bpzb-public-eu-west3a-tf"
+          public_ip_on_launch = "true"
         }
         public-subnet2 = {
-          cidr              = "10.0.2.0/24"
-          availability_zone = "eu-west-3b"
-          name              = "bpzb-public-eu-west3b-tf"
+          cidr                = "10.0.2.0/24"
+          availability_zone   = "eu-west-3b"
+          name                = "bpzb-public-eu-west3b-tf"
+          public_ip_on_launch = "true"
         }
         public-subnet3 = {
-          cidr              = "10.0.3.0/24"
-          availability_zone = "eu-west-3c"
-          name              = "bpzb-public-eu-west3c-tf"
+          cidr                = "10.0.3.0/24"
+          availability_zone   = "eu-west-3c"
+          name                = "bpzb-public-eu-west3c-tf"
+          public_ip_on_launch = "true"
         }
       }
       subnets_private = {

@@ -50,9 +50,10 @@ variable "subnets_public" {
   type = map(
     object(
       {
-        cidr              = string
-        name              = string
-        availability_zone = string
+        cidr                = string
+        name                = string
+        availability_zone   = string
+        public_ip_on_launch = bool
       }
     )
   )

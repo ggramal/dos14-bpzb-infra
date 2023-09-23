@@ -94,11 +94,11 @@ resource "aws_internet_gateway" "gw" {
 }
 
 resource "aws_subnet" "public" {
-  for_each            = var.subnets_public
-  vpc_id              = aws_vpc.main.id
-  cidr_block          = each.value.cidr
-  availability_zone   = each.value.availability_zone
-  public_ip_on_launch = each.value.public_ip_on_launch
+  for_each                = var.subnets_public
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = each.value.cidr
+  availability_zone       = each.value.availability_zone
+  map_public_ip_on_launch = each.value.public_ip_on_launch
 
   tags = {
     Name = each.value.name

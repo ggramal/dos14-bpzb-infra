@@ -10,7 +10,7 @@ resource "aws_vpc" "main" {
 resource "aws_eip" "eip_nat" {
   for_each = var.nat_gws
   tags = {
-    Name = var.eip_name
+    Name = "${each.value.eip_name}-${each.value.subnet_to_place_nat}"
   }
 }
 
@@ -78,7 +78,7 @@ resource "aws_nat_gateway" "nat" {
   subnet_id     = aws_subnet.public[each.value.subnet_to_place_nat].id
 
   tags = {
-    Name = each.value.name
+    Name = "${each.value.name}-${each.value.subnet_to_place_nat}"
   }
 
   depends_on = [aws_internet_gateway.gw, aws_subnet.public, aws_eip.eip_nat]

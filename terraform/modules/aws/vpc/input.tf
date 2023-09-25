@@ -13,11 +13,6 @@ variable "route_nat_gw" {
   type        = string
 }
 
-variable "eip_name" {
-  description = "Elastic IP name for nat"
-  type        = string
-}
-
 variable "enable_dns_hostnames" {
   description = "enable/disable DNS hostnames in the VPC"
   type        = bool
@@ -33,6 +28,7 @@ variable "nat_gws" {
   type = map(
     object(
       {
+        eip_name            = string
         name                = string
         subnet_to_place_nat = string
       }

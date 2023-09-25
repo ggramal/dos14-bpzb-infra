@@ -22,7 +22,6 @@ module "vpcs" {
   for_each             = local.vpcs
   name                 = each.value.name
   cidr_block           = each.value.cidr_block
-  eip_name             = each.value.eip_name
   route_cidr           = each.value.route_cidr
   route_nat_gw         = each.value.route_nat_gw
   enable_dns_hostnames = each.value.enable_dns_hostnames

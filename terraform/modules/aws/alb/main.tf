@@ -3,9 +3,9 @@ resource "aws_lb" "bpzb" {
   internal           = var.alb_internal
   load_balancer_type = var.alb_load_balancer_type
   security_groups    = [aws_security_group.alb.id]
-  #  subnets            = #[for subnet in aws_subnet.public : subnet.id]
-  ip_address_type = var.alb_ip_address_type
-  depends_on      = [aws_security_group.alb]
+  subnets            = var.alb_vpc_public_subnet_ids
+  ip_address_type    = var.alb_ip_address_type
+  depends_on         = [aws_security_group.alb]
 }
 
 resource "aws_security_group" "alb" {

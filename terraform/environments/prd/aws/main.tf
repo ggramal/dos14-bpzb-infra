@@ -32,11 +32,11 @@ module "vpcs" {
 }
 
 module "alb" {
-  for_each     = local.vpcs
-  alb_vpc_id   = module.vpcs[each.key].vpc_id
-  alb_vpc_name = each.key
+  for_each                  = local.vpcs
+  alb_vpc_id                = module.vpcs[each.key].vpc_id
+  alb_vpc_name              = each.key
+  alb_vpc_public_subnet_ids = module.vpcs[each.key].vpc_public_subnet_ids
 
-  #alb_vpc_id = module.vpcs["bpzb-tf"].vpc_id
   # ALB
   source                 = "../../../modules/aws/alb/"
   alb_name               = local.alb_name

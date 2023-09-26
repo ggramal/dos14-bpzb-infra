@@ -3,6 +3,10 @@ variable "alb_vpc_id" {
   #  type = string
 }
 
+variable "alb_vpc_public_subnet_ids" {
+  description = "vpc public subnet ids"
+}
+
 variable "alb_vpc_name" {
   description = "vpc name"
 }

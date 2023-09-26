@@ -58,17 +58,31 @@ resource "aws_lb_target_group" "alb" {
   }
 }
 
-#resource "aws_lb_listener" "alb" {
-#  load_balancer_arn = aws_lb.bpzb.arn
-#  port              = "80"
-#  protocol          = "TCP"
-#  port              = "443"
-#  protocol          = "HTTPS"
-#  ssl_policy        = "ELBSecurityPolicy-2016-08"
-#  certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
+resource "aws_lb_listener" "http" {
+  load_balancer_arn = aws_lb.bpzb.arn
+  port              = var.alb_listener_80["port"]
+  protocol          = var.alb_listener_80["protocol"]
 
-#  default_action {
-#  type             = "forward"
-#  target_group_arn = aws_lb_target_group.alb.arn
-#}
-#}
+  default_action {
+    type = var.alb_listener_80["action_type"]
+    redirect {
+      port        = var.alb_listener_80["action_port"]
+      protocol    = var.alb_listener_80["action_protocol"]
+      status_code = var.alb_listener_80["action_status_code"]
+    }
+  }
+}
+
+resource "aws_lb_listener" "https" {
+  load_balancer_arn = aws_lb.bpzb.arn
+  port              = var.alb_listener_443["port"]
+  protocol          = var.alb_listener_443["protocol"]
+  ssl_policy        = var.alb_listener_443["ssl_policy"]
+  certificate_arn   = var.alb_listener_443["certificate_arn"]
+
+  default_action {
+    #    port             = var.alb_listener_443["action_port"]
+    type = var.alb_listener_443["action_type"]
+    #    target_group_arn = aws_lb_target_group.alb.arn[0]
+  }
+}

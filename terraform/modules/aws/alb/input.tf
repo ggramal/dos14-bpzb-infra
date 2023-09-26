@@ -103,14 +103,33 @@ variable "tg_lb_type" {
   type        = string
 }
 
-#variable "" {
-#  description = ""
-#  type =
-#}
-#variable "" {
-#  description = ""
-#  type =
-#}
+variable "alb_listener_80" {
+  description = "Load Balancer Listener http port80 variables"
+  type = object(
+    {
+      port               = number
+      protocol           = string
+      action_type        = string
+      action_port        = number
+      action_protocol    = string
+      action_status_code = string
+    }
+  )
+}
+
+variable "alb_listener_443" {
+  description = "Load Balancer Listener https port443 variables"
+  type = object(
+    {
+      port            = number
+      protocol        = string
+      action_type     = string
+      action_port     = number
+      ssl_policy      = string
+      certificate_arn = string
+    }
+  )
+}
 
 #variable "" {
 #  description = ""

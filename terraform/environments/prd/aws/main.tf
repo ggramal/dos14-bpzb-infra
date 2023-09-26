@@ -49,9 +49,10 @@ module "alb" {
   sg_alb_rules_ingress = local.sg_alb_rules_ingress
   sg_alb_rules_egress  = local.sg_alb_rules_egress
   #  sg_alb_create_before_destroy = local.sg_alb_create_before_destroy
-  # TG
+  # TGs
   tgs_alb    = local.tgs_alb
   tg_lb_type = local.tg_lb_type
-  # listener
-
+  # listeners
+  alb_listener_80  = local.alb_listener_80
+  alb_listener_443 = local.alb_listener_443
 }

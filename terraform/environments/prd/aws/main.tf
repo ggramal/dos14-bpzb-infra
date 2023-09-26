@@ -55,4 +55,6 @@ module "alb" {
   # listeners
   alb_listener_80  = local.alb_listener_80
   alb_listener_443 = local.alb_listener_443
+  # listeners rules
+  alb_rules = local.alb_rules
 }

@@ -131,20 +131,17 @@ variable "alb_listener_443" {
   )
 }
 
-#variable "" {
-#  description = ""
-#  type =
-#}
-
-#variable "" {
-#  description = ""
-#  type =
-#}
-
-
-
-
-
-
-
+variable "alb_rules" {
+  description = "alb listeners rules"
+  type = list(
+    object(
+      {
+        name        = string
+        priority    = number
+        type        = string
+        path_values = set(string)
+      }
+    )
+  )
+}
 

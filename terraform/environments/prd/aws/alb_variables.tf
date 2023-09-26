@@ -79,4 +79,31 @@ locals {
     action_port     = 80
     action_type     = "forward"
   }
+
+  alb_rules = [
+    {
+      name        = "authz"
+      priority    = 99
+      type        = "forward"
+      path_values = ["/api/v1/users/*", "/api/v1/organisations/*", "/api/v1/users", "/api/v1/organisations", "/api/v1/?*/authz/?*"]
+    },
+    {
+      name        = "authn"
+      priority    = 98
+      type        = "forward"
+      path_values = ["/api/v1/identity/validate", "/api/v1/identity/login", "/api/v1/identity"]
+    },
+    {
+      name        = "bank"
+      priority    = 97
+      type        = "forward"
+      path_values = ["/api/v1/credits/*", "/api/v1/deposits/*", "/api/v1/deposits", "/api/v1/credits"]
+    },
+    {
+      name        = "account"
+      priority    = 96
+      type        = "forward"
+      path_values = ["/api/v1/test_account", ]
+    }
+  ]
 }

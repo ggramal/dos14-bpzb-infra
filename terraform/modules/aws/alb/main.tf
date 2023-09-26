@@ -83,6 +83,25 @@ resource "aws_lb_listener" "https" {
   default_action {
     #    port             = var.alb_listener_443["action_port"]
     type             = var.alb_listener_443["action_type"]
-    target_group_arn = aws_lb_target_group.alb["authz"].arn ###hardcode
+    target_group_arn = aws_lb_target_group.alb["authz"].arn
   }
 }
+
+resource "aws_lb_listener_rule" "bpzb-tf" {
+  count        = length(var.alb_rules)
+  listener_arn = aws_lb_listener.https.arn
+  priority     = var.alb_rules[count.index].priority
+
+  action {
+    type             = var.alb_rules[count.index].type
+    target_group_arn = aws_lb_target_group.alb[var.alb_rules[count.index].name].arn
+  }
+
+  condition {
+    path_pattern {
+      values = var.alb_rules[count.index].path_values
+    }
+  }
+}
+
+

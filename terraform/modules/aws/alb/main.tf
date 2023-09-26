@@ -73,12 +73,13 @@ resource "aws_lb_listener" "http" {
   }
 }
 
+## need to add certificate!!!
 resource "aws_lb_listener" "https" {
   load_balancer_arn = aws_lb.bpzb.arn
   port              = var.alb_listener_443["port"]
   protocol          = var.alb_listener_443["protocol"]
-  ssl_policy        = var.alb_listener_443["ssl_policy"]
-  certificate_arn   = var.alb_listener_443["certificate_arn"]
+  ssl_policy        = var.alb_listener_443["ssl_policy"]      #need
+  certificate_arn   = var.alb_listener_443["certificate_arn"] #need
 
   default_action {
     #    port             = var.alb_listener_443["action_port"]

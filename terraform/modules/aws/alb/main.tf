@@ -82,7 +82,7 @@ resource "aws_lb_listener" "https" {
 
   default_action {
     #    port             = var.alb_listener_443["action_port"]
-    type = var.alb_listener_443["action_type"]
-    #    target_group_arn = aws_lb_target_group.alb.arn[0]
+    type             = var.alb_listener_443["action_type"]
+    target_group_arn = aws_lb_target_group.alb["authz"].arn ###hardcode
   }
 }

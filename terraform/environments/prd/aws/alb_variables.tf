@@ -2,7 +2,7 @@ locals {
   alb_name               = "ALB"
   alb_internal           = "false"
   alb_load_balancer_type = "application"
-  alb_ip_address_type    = "dualstack"
+  alb_ip_address_type    = "ipv4" #"dualstack"
   sg_alb_name            = "SG"
   sg_alb_description     = "Allow 80 and 443 inbound traffic to ALB"
   sg_alb_rules_ingress = {
@@ -37,25 +37,25 @@ locals {
   tgs_alb = {
     authz = {
       port     = 80
-      protocol = "tcp"
+      protocol = "TCP"
       path     = "/api/v1/authz/health_check"
       matcher  = 200
     }
     authn = {
       port     = 80
-      protocol = "tcp"
+      protocol = "TCP"
       path     = "/api/v1/authn/health_check"
       matcher  = 200
     }
     bank = {
       port     = 80
-      protocol = "tcp"
+      protocol = "TCP"
       path     = "/api/v1/bank/health_check"
       matcher  = 200
     }
     account = {
       port     = 80
-      protocol = "tcp"
+      protocol = "TCP"
       path     = "/api/v1/account/health_check"
       matcher  = 200
     }
@@ -64,7 +64,7 @@ locals {
 
   alb_listener_80 = {
     port               = 80
-    protocol           = "http"
+    protocol           = "HTTP"
     action_type        = "redirect"
     action_port        = 443
     action_protocol    = "HTTPS"
@@ -73,7 +73,7 @@ locals {
 
   alb_listener_443 = {
     port            = 443
-    protocol        = "https"
+    protocol        = "HTTPS"
     ssl_policy      = ""
     certificate_arn = ""
     action_port     = 80

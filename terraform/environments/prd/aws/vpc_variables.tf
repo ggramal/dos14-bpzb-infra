@@ -1,7 +1,7 @@
 locals {
   aws_region = "eu-west-3"
   vpcs = {
-    bpzb-tf = {
+    bpzb-tf = { # must be same as name "bpzb-tf"
       name                 = "bpzb-tf"
       cidr_block           = "10.0.0.0/16"
       enable_dns_hostnames = "true"

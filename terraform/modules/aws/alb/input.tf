@@ -124,7 +124,6 @@ variable "alb_listener_443" {
       port            = number
       protocol        = string
       action_type     = string
-      action_port     = number
       ssl_policy      = string
       certificate_arn = string
     }

@@ -82,7 +82,6 @@ resource "aws_lb_listener" "https" {
   certificate_arn   = var.alb_listener_443["certificate_arn"] #need
 
   default_action {
-    #    port             = var.alb_listener_443["action_port"]
     type             = var.alb_listener_443["action_type"]
     target_group_arn = aws_lb_target_group.alb["authz"].arn
   }

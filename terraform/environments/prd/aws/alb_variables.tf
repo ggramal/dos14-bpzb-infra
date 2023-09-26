@@ -76,7 +76,6 @@ locals {
     protocol        = "HTTPS"
     ssl_policy      = ""
     certificate_arn = ""
-    action_port     = 80
     action_type     = "forward"
   }
 

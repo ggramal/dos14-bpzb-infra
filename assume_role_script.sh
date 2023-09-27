@@ -1,10 +1,10 @@
 #!/bin/bash
 # For use this script you need to install jq "sudo apt install jq -y"
-# get account_id
-account_id=$(aws sts get-caller-identity | jq --raw-output '.Account')
 # get user data
 read -p "Enter your profile " aws_profile
 read -p "Enter your mfa name " mfa_name
+# get account_id
+account_id=$(aws --profile $aws_profile sts get-caller-identity | jq --raw-output '.Account')
 read -p "Enter your mfa token-code " mfa_token_code
 # get aws credentials
 credentials=$(aws sts assume-role --role-arn arn:aws:iam::$account_id:role/Admins --role-session-name tf --serial-number arn:aws:iam::$account_id:mfa/$mfa_name --token-code $mfa_token_code --profile $aws_profile)

@@ -74,8 +74,8 @@ locals {
   alb_listener_443 = {
     port            = 443
     protocol        = "HTTPS"
-    ssl_policy      = ""
-    certificate_arn = ""
+    ssl_policy      = "ELBSecurityPolicy-2016-08"
+    certificate_arn = "" #need route53
     action_type     = "forward"
   }
 

@@ -30,3 +30,31 @@ module "vpcs" {
   internet_gw_name     = each.value.internet_gw_name
   nat_gws              = each.value.nat_gws
 }
+
+module "alb" {
+  for_each                  = local.albs
+  alb_vpc_id                = module.vpcs[each.value.vpc_name].vpc_id
+  alb_vpc_name              = each.value.vpc_name
+  alb_vpc_public_subnet_ids = module.vpcs[each.value.vpc_name].vpc_public_subnet_ids
+
+  # ALB
+  source                 = "../../../modules/aws/alb/"
+  alb_name               = each.value.alb_name
+  alb_internal           = each.value.alb_internal
+  alb_load_balancer_type = each.value.alb_load_balancer_type
+  alb_ip_address_type    = each.value.alb_ip_address_type
+  # SG
+  sg_alb_name          = each.value.sg_alb_name
+  sg_alb_description   = each.value.sg_alb_description
+  sg_alb_rules_ingress = each.value.sg_alb_rules_ingress
+  sg_alb_rules_egress  = each.value.sg_alb_rules_egress
+  #  sg_alb_create_before_destroy = local.sg_alb_create_before_destroy
+  # TGs
+  tgs_alb    = each.value.tgs_alb
+  tg_lb_type = each.value.tg_lb_type
+  # listeners
+  alb_listener_80  = each.value.alb_listener_80
+  alb_listener_443 = each.value.alb_listener_443
+  # listeners rules
+  alb_rules = each.value.alb_rules
+}

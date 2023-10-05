@@ -58,3 +58,14 @@ module "alb" {
   # listeners rules
   alb_rules = each.value.alb_rules
 }
+
+module "route53" {
+  source                = "../../../modules/aws/route53/"
+  for_each              = local.routes53
+  dns_name              = each.value.name
+  dns_private_zone      = each.value.private_zone
+  dns_record_name       = each.value.record_name
+  dns_record_type       = each.value.record_type
+  dns_record_ttl        = each.value.record_ttl
+  dns_validation_method = each.value.validation_method
+}

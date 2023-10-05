@@ -36,6 +36,7 @@ module "alb" {
   alb_vpc_id                = module.vpcs[each.value.vpc_name].vpc_id
   alb_vpc_name              = each.value.vpc_name
   alb_vpc_public_subnet_ids = module.vpcs[each.value.vpc_name].vpc_public_subnet_ids
+  certificate_arn           = module.route53[each.value.vpc_name].certificate_arn
 
   # ALB
   source                 = "../../../modules/aws/alb/"

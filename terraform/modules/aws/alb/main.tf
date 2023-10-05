@@ -78,8 +78,8 @@ resource "aws_lb_listener" "https" {
   load_balancer_arn = aws_lb.bpzb.arn
   port              = var.alb_listener_443["port"]
   protocol          = var.alb_listener_443["protocol"]
-  ssl_policy        = var.alb_listener_443["ssl_policy"]      #need
-  certificate_arn   = var.alb_listener_443["certificate_arn"] #need
+  ssl_policy        = var.alb_listener_443["ssl_policy"]
+  certificate_arn   = var.certificate_arn
 
   default_action {
     type             = var.alb_listener_443["action_type"]

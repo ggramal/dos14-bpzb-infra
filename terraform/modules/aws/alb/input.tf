@@ -121,13 +121,17 @@ variable "alb_listener_443" {
   description = "Load Balancer Listener https port443 variables"
   type = object(
     {
-      port            = number
-      protocol        = string
-      action_type     = string
-      ssl_policy      = string
-      certificate_arn = string
+      port        = number
+      protocol    = string
+      action_type = string
+      ssl_policy  = string
+      #certificate_arn = string
     }
   )
+}
+
+variable "certificate_arn" {
+  description = "sertificate arn from route53 module"
 }
 
 variable "alb_rules" {

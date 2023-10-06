@@ -130,9 +130,9 @@ variable "alb_listener_443" {
   )
 }
 
-variable "certificate_arn" {
-  description = "sertificate arn from route53 module"
-}
+#variable "certificate_arn" {
+#  description = "sertificate arn from route53 module"
+#}
 
 variable "alb_rules" {
   description = "alb listeners rules"

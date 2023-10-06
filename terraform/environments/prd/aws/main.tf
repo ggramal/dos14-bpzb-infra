@@ -36,7 +36,7 @@ module "alb" {
   alb_vpc_id                = module.vpcs[each.value.vpc_name].vpc_id
   alb_vpc_name              = each.value.vpc_name
   alb_vpc_public_subnet_ids = module.vpcs[each.value.vpc_name].vpc_public_subnet_ids
-  certificate_arn           = module.route53[each.value.vpc_name].certificate_arn
+  #  certificate_arn           = module.route53[each.value.vpc_name].certificate_arn
 
   # ALB
   source                 = "../../../modules/aws/alb/"
@@ -61,12 +61,22 @@ module "alb" {
 }
 
 module "route53" {
-  source                = "../../../modules/aws/route53/"
-  for_each              = local.routes53
-  dns_name              = each.value.name
-  dns_private_zone      = each.value.private_zone
-  dns_record_name       = each.value.record_name
-  dns_record_type       = each.value.record_type
-  dns_record_ttl        = each.value.record_ttl
-  dns_validation_method = each.value.validation_method
+  source   = "../../../modules/aws/route53/"
+  for_each = local.routes53
+  # alb outputs
+  route53_alb_dns_name = module.alb[each.value.vpc_name].dns_name
+  route53_alb_zone_id  = module.alb[each.value.vpc_name].zone_id
+  # zone
+  zone_name = each.value.dns_name
+  # A_record
+  a_record_name = each.value.record_name
+  a_record_type = each.value.record_type
+  #a_record_ttl        = each.value.record_ttl
+  a_target_health = each.value.evaluate_target_health
+  # certificate
+  cert_domain_name       = each.value.domain_name
+  cert_validation_method = each.value.validation_method
+  # cname record
+  cname_overwrite = each.value.cname_overwrite
+  cname_ttl       = each.value.cname_ttl
 }

@@ -7,3 +7,14 @@ output "zone_id" {
   description = "The canonical hosted zone ID of the load balancer"
   value       = aws_lb.bpzb.zone_id
 }
+
+output "lb_arn" {
+  description = "The ARN of the load balancer (matches id)"
+  value       = aws_lb.bpzb.arn
+}
+
+output "lb_tg" {
+  description = "alb target group"
+  value       = aws_lb_target_group.alb
+}
+

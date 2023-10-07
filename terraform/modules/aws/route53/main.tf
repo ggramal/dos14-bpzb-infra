@@ -42,7 +42,6 @@ resource "aws_route53_record" "api_bpzb_cname" {
 
 resource "aws_acm_certificate_validation" "api_bpzb" {
   certificate_arn         = aws_acm_certificate.api_bpzb.arn
-  validation_record_fqdns = [for record in aws_route53_record.api_bpzb_cname : record.fqdn] #[aws_route53_record.api_bpzb.fqdn]
-
+  validation_record_fqdns = [for record in aws_route53_record.api_bpzb_cname : record.fqdn]
 }
 

@@ -5,9 +5,13 @@ locals {
       # zone
       dns_name = "bpzb.smodata.net"
       # A record
-      record_name            = "api.bpzb.smodata.net"
-      record_type            = "A"
-      evaluate_target_health = true
+      records = {
+        api_bpzb = {
+          record_name   = "api.bpzb.smodata.net"
+          record_type   = "A"
+          target_health = true
+        }
+      }
       # certificate
       domain_name       = "api.bpzb.smodata.net"
       validation_method = "DNS"

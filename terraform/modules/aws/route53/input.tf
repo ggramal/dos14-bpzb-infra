@@ -1,8 +1,8 @@
-variable "route53_alb_dns_name" {
+variable "alb_dns_name" {
   description = "The DNS name of the load balancer"
 }
 
-variable "route53_alb_zone_id" {
+variable "alb_zone_id" {
   description = "The canonical hosted zone ID of the load balancer"
 }
 
@@ -11,20 +11,28 @@ variable "zone_name" {
   type        = string
 }
 
-variable "a_record_name" {
-  description = "The name of the record"
-  type        = string
+variable "records" {
+  description = ""
+  type = map(
+    object(
+      {
+        record_name   = string
+        record_type   = string
+        target_health = bool
+      }
+    )
+  )
 }
 
-variable "a_record_type" {
-  description = "The record type"
-  type        = string
-}
+#variable "a_record_type" {
+#  description = "The record type"
+#  type        = string
+#}
 
-variable "a_target_health" {
-  description = "Set to true if you want Route 53 to determine whether to respond to DNS queries using this resource record set by checking the health of the resource record set"
-  type        = bool
-}
+#variable "a_target_health" {
+#  description = "Set to true if you want Route 53 to determine whether to respond to DNS queries using this resource record set by checking the health of the resource record set"
+#  type        = bool
+#}
 
 variable "cert_domain_name" {
   description = "Domain name for which the certificate should be issued"

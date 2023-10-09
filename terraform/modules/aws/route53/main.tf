@@ -3,13 +3,14 @@ resource "aws_route53_zone" "bpzb" {
 }
 
 resource "aws_route53_record" "api_bpzb_a" {
-  name    = var.a_record_name
-  type    = var.a_record_type
-  zone_id = aws_route53_zone.bpzb.zone_id
+  for_each = var.records
+  name     = each.value.record_name
+  type     = each.value.record_type
+  zone_id  = aws_route53_zone.bpzb.zone_id
   alias {
-    name                   = var.route53_alb_dns_name
-    zone_id                = var.route53_alb_zone_id
-    evaluate_target_health = var.a_target_health
+    name                   = var.alb_dns_name
+    zone_id                = var.alb_zone_id
+    evaluate_target_health = each.value.target_health
   }
   depends_on = [aws_route53_zone.bpzb]
 }

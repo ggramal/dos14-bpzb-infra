@@ -80,8 +80,6 @@ module "route53" {
   zone_name = each.value.dns_name
   # records
   records = each.value.records
-  # a_record_type   = each.value.record_type
-  #a_target_health = each.value.evaluate_target_health
   # certificate
   cert_domain_name       = each.value.domain_name
   cert_validation_method = each.value.validation_method

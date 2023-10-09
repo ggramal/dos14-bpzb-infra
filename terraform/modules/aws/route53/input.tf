@@ -12,7 +12,7 @@ variable "zone_name" {
 }
 
 variable "records" {
-  description = ""
+  description = "map of records for aws route53 A records "
   type = map(
     object(
       {
@@ -23,16 +23,6 @@ variable "records" {
     )
   )
 }
-
-#variable "a_record_type" {
-#  description = "The record type"
-#  type        = string
-#}
-
-#variable "a_target_health" {
-#  description = "Set to true if you want Route 53 to determine whether to respond to DNS queries using this resource record set by checking the health of the resource record set"
-#  type        = bool
-#}
 
 variable "cert_domain_name" {
   description = "Domain name for which the certificate should be issued"

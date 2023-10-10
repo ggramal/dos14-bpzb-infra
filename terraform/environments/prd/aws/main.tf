@@ -73,9 +73,6 @@ module "alb_listener_https" {
 module "route53" {
   source   = "../../../modules/aws/route53/"
   for_each = local.routes53
-  # alb outputs
-  #alb_dns_name = each.value.alb_dns_name
-  #alb_zone_id  = each.value.alb_zone_id
   # zone
   zone_name = each.value.dns_name
   # records

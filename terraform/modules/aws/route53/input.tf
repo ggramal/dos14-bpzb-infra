@@ -1,11 +1,3 @@
-#variable "alb_dns_name" {
-#  description = "The DNS name of the load balancer"
-#}
-
-#variable "alb_zone_id" {
-#  description = "The canonical hosted zone ID of the load balancer"
-#}
-
 variable "zone_name" {
   description = "This is the name of the hosted zone"
   type        = string

@@ -1,10 +1,10 @@
-variable "alb_dns_name" {
-  description = "The DNS name of the load balancer"
-}
+#variable "alb_dns_name" {
+#  description = "The DNS name of the load balancer"
+#}
 
-variable "alb_zone_id" {
-  description = "The canonical hosted zone ID of the load balancer"
-}
+#variable "alb_zone_id" {
+#  description = "The canonical hosted zone ID of the load balancer"
+#}
 
 variable "zone_name" {
   description = "This is the name of the hosted zone"
@@ -13,12 +13,20 @@ variable "zone_name" {
 
 variable "records" {
   description = "map of records for aws route53 A records "
-  type = map(
+  type = list(
     object(
       {
-        record_name   = string
-        record_type   = string
-        target_health = bool
+        record_name = string
+        record_type = string
+        aliases = list(
+          object(
+            {
+              alb_dns_name  = string
+              alb_zone_id   = string
+              target_health = bool
+            }
+          )
+        )
       }
     )
   )

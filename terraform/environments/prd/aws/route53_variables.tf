@@ -22,8 +22,6 @@ locals {
       domain_name       = "api.bpzb.smodata.net"
       validation_method = "DNS"
       # cname
-      alb_dns_name    = module.alb["bpzb-tf"].dns_name
-      alb_zone_id     = module.alb["bpzb-tf"].zone_id
       cname_overwrite = true
       cname_ttl       = 60
     }

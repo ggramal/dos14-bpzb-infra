@@ -80,7 +80,4 @@ module "route53" {
   # certificate
   cert_domain_name       = each.value.domain_name
   cert_validation_method = each.value.validation_method
-  # cname record
-  cname_overwrite = each.value.cname_overwrite
-  cname_ttl       = each.value.cname_ttl
 }

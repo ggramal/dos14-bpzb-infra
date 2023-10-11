@@ -3,12 +3,12 @@ resource "aws_route53_zone" "bpzb" {
 }
 
 resource "aws_route53_record" "api_bpzb_a" {
-  count   = length(var.records)
-  name    = var.records[count.index].record_name
-  type    = var.records[count.index].record_type
+  count   = length(var.records.a_records)
+  name    = var.records.a_records[count.index].record_name
+  type    = var.records.a_records[count.index].record_type
   zone_id = aws_route53_zone.bpzb.zone_id
   dynamic "alias" {
-    for_each = var.records[count.index].aliases
+    for_each = var.records.a_records[count.index].aliases
     content {
       name                   = alias.value.alb_dns_name
       zone_id                = alias.value.alb_zone_id
@@ -35,10 +35,10 @@ resource "aws_route53_record" "api_bpzb_cname" {
     }
   }
 
-  allow_overwrite = var.cname_overwrite
+  allow_overwrite = var.records.cname_validation_record.overwrite
   name            = each.value.name
   records         = [each.value.record]
-  ttl             = var.cname_ttl
+  ttl             = var.records.cname_validation_record.record_ttl
   type            = each.value.type
   zone_id         = aws_route53_zone.bpzb.zone_id
   depends_on      = [aws_route53_zone.bpzb, aws_acm_certificate.api_bpzb]

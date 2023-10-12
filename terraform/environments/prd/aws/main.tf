@@ -81,3 +81,21 @@ module "route53" {
   cert_domain_name       = each.value.domain_name
   cert_validation_method = each.value.validation_method
 }
+
+module "asg" {
+  source       = "../../../modules/aws/asg/"
+  for_each     = local.asgs
+  asg_vpc_name = each.value.vpc_name
+  # outputs
+  asg_vpc_id  = module.vpcs[each.value.vpc_name].vpc_id
+  asg_alb_arn = module.alb[each.value.vpc_name].lb_arn
+  #secure groups
+  sg_jh_name           = each.value.sg_jh_name
+  sg_jh_description    = each.value.sg_jh_description
+  sg_jh_rules_ingress  = each.value.sg_jh_rules_ingress
+  sg_jh_rules_egress   = each.value.sg_jh_rules_egress
+  sg_app_name          = each.value.sg_app_name
+  sg_app_description   = each.value.sg_app_description
+  sg_app_rules_ingress = each.value.sg_app_rules_ingress
+  sg_app_rules_egress  = each.value.sg_app_rules_egress
+}

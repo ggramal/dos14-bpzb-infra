@@ -26,6 +26,17 @@ resource "aws_acm_certificate" "api_bpzb" {
   }
 }
 
+resource "aws_route53_record" "other" {
+  count   = var.records.other_records[0].test_record ? 0 : length(var.records.other_records)
+  zone_id = aws_route53_zone.bpzb.zone_id
+  name    = var.records.other_records[count.index].record_name
+  type    = var.records.other_records[count.index].record_type
+  ttl     = var.records.other_records[count.index].record_ttl
+  records = var.records.other_records[count.index].records
+}
+
+
+
 resource "aws_route53_record" "api_bpzb_cname" {
   for_each = {
     for dvo in aws_acm_certificate.api_bpzb.domain_validation_options : dvo.domain_name => {

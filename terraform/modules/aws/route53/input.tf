@@ -30,17 +30,18 @@ variable "records" {
           overwrite  = bool
         }
       )
-      other_records = optional(list(
+      other_records = list(
         object(
           {
+            test_record = optional(bool)
             record_name = string
             record_type = string
-            record_ttl  = number
+            record_ttl  = optional(number)
             overwrite   = optional(bool)
-            records     = list(string)
+            records     = optional(list(string))
           }
         )
-      ))
+      )
     }
   )
 }

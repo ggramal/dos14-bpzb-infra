@@ -4,7 +4,7 @@ locals {
       vpc_name = "bpzb-tf"
       # zone
       dns_name = "bpzb.smodata.net"
-      # A record
+      # records
       records = {
         a_records = [
           {
@@ -23,12 +23,19 @@ locals {
           record_ttl = 60
           overwrite  = true
         },
-        other_records = [
+        other_records = [ # If you need create this records - change test_record to false
           {
+            test_record = true # If you need create real records - change test_record to false
             record_name = ""
             record_type = "CNAME"
             record_ttl  = 300
             records     = [""]
+          },
+          {
+            record_name = "test.test.test"
+            record_type = "CNAME"
+            record_ttl  = 300
+            records     = ["test", "test"]
           }
         ]
       }

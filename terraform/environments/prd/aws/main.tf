@@ -48,13 +48,36 @@ module "alb" {
   sg_alb_description   = each.value.sg_alb_description
   sg_alb_rules_ingress = each.value.sg_alb_rules_ingress
   sg_alb_rules_egress  = each.value.sg_alb_rules_egress
-  #  sg_alb_create_before_destroy = local.sg_alb_create_before_destroy
   # TGs
   tgs_alb    = each.value.tgs_alb
   tg_lb_type = each.value.tg_lb_type
-  # listeners
-  alb_listener_80  = each.value.alb_listener_80
+  # listener http
+  alb_listener_80 = each.value.alb_listener_80
+}
+
+module "alb_listener_https" {
+  # ALB HTTPS submodule
+  source   = "../../../modules/aws/alb/alb_listener_https"
+  for_each = local.albs
+  # from ALB
+  alb_arn = module.alb[each.value.vpc_name].lb_arn
+  alb_tg  = module.alb[each.value.vpc_name].lb_tg
+  # from route53
+  alb_route53_certificate_arn = module.route53[each.value.vpc_name].certificate_arn
+  # listener https
   alb_listener_443 = each.value.alb_listener_443
-  # listeners rules
+  # listener https rules
   alb_rules = each.value.alb_rules
+}
+
+module "route53" {
+  source   = "../../../modules/aws/route53/"
+  for_each = local.routes53
+  # zone
+  zone_name = each.value.dns_name
+  # records
+  records = each.value.records
+  # certificate
+  cert_domain_name       = each.value.domain_name
+  cert_validation_method = each.value.validation_method
 }

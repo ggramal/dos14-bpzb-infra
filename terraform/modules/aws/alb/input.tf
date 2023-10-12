@@ -1,6 +1,5 @@
 variable "alb_vpc_id" {
   description = "vpc id"
-  #  type = string
 }
 
 variable "alb_vpc_public_subnet_ids" {
@@ -79,11 +78,6 @@ variable "sg_alb_rules_egress" {
   )
 }
 
-#variable "sg_alb_create_before_destroy" {
-#  description = "changes this: Terraform will instead destroy the existing object and then create a new replacement object with the new configured arguments"
-#  type        = bool
-#}
-
 variable "tgs_alb" {
   description = "alb target groups"
   type = map(
@@ -114,33 +108,6 @@ variable "alb_listener_80" {
       action_protocol    = string
       action_status_code = string
     }
-  )
-}
-
-variable "alb_listener_443" {
-  description = "Load Balancer Listener https port443 variables"
-  type = object(
-    {
-      port            = number
-      protocol        = string
-      action_type     = string
-      ssl_policy      = string
-      certificate_arn = string
-    }
-  )
-}
-
-variable "alb_rules" {
-  description = "alb listeners rules"
-  type = list(
-    object(
-      {
-        name        = string
-        priority    = number
-        type        = string
-        path_values = set(string)
-      }
-    )
   )
 }
 

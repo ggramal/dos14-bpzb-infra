@@ -40,7 +40,7 @@ resource "aws_security_group" "alb" {
   }
 
   lifecycle {
-    create_before_destroy = true #var.sg_alb_create_before_destroy
+    create_before_destroy = true
   }
 }
 
@@ -51,7 +51,6 @@ resource "aws_lb_target_group" "alb" {
   port        = each.value.port
   protocol    = each.value.protocol
   vpc_id      = var.alb_vpc_id
-  #  deregistration_delay = 10 #seconds
   health_check {
     path    = each.value.path
     matcher = each.value.matcher
@@ -72,36 +71,4 @@ resource "aws_lb_listener" "http" {
     }
   }
 }
-
-## need to add certificate!!!
-resource "aws_lb_listener" "https" {
-  load_balancer_arn = aws_lb.bpzb.arn
-  port              = var.alb_listener_443["port"]
-  protocol          = var.alb_listener_443["protocol"]
-  ssl_policy        = var.alb_listener_443["ssl_policy"]      #need
-  certificate_arn   = var.alb_listener_443["certificate_arn"] #need
-
-  default_action {
-    type             = var.alb_listener_443["action_type"]
-    target_group_arn = aws_lb_target_group.alb["authz"].arn
-  }
-}
-
-resource "aws_lb_listener_rule" "bpzb-tf" {
-  count        = length(var.alb_rules)
-  listener_arn = aws_lb_listener.https.arn
-  priority     = var.alb_rules[count.index].priority
-
-  action {
-    type             = var.alb_rules[count.index].type
-    target_group_arn = aws_lb_target_group.alb[var.alb_rules[count.index].name].arn
-  }
-
-  condition {
-    path_pattern {
-      values = var.alb_rules[count.index].path_values
-    }
-  }
-}
-
 

@@ -1,7 +1,7 @@
 resource "aws_security_group" "jh" {
-  name        = "${var.sg_jh_name}-${var.asg_vpc_name}"
+  name        = "${var.sg_jh_name}-${var.vpc_name}"
   description = var.sg_jh_description
-  vpc_id      = var.asg_vpc_id
+  vpc_id      = var.vpc_id
 
   dynamic "ingress" {
     for_each = var.sg_jh_rules_ingress.ports
@@ -33,9 +33,9 @@ resource "aws_security_group" "jh" {
 }
 
 resource "aws_security_group" "app" {
-  name        = "${var.sg_app_name}-${var.asg_vpc_name}"
+  name        = "${var.sg_app_name}-${var.vpc_name}"
   description = var.sg_app_description
-  vpc_id      = var.asg_vpc_id
+  vpc_id      = var.vpc_id
 
   ingress {
     description     = var.sg_app_rules_ingress.jh_description
@@ -50,7 +50,7 @@ resource "aws_security_group" "app" {
     from_port       = var.sg_app_rules_ingress.alb_port
     to_port         = var.sg_app_rules_ingress.alb_port
     protocol        = var.sg_app_rules_ingress.alb_protocol
-    security_groups = [var.asg_alb_arn]
+    security_groups = [var.alb_arn]
   }
 
   dynamic "egress" {

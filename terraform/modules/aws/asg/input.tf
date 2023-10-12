@@ -1,12 +1,12 @@
-variable "asg_vpc_id" {
+variable "vpc_id" {
   description = "vpc id"
 }
 
-variable "asg_vpc_name" {
+variable "vpc_name" {
   description = "vpc name"
 }
 
-variable "asg_alb_arn" {
+variable "alb_arn" {
   description = "The ARN of the load balancer (matches id)"
 }
 

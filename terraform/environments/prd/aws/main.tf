@@ -83,12 +83,12 @@ module "route53" {
 }
 
 module "asg" {
-  source       = "../../../modules/aws/asg/"
-  for_each     = local.asgs
-  asg_vpc_name = each.value.vpc_name
+  source   = "../../../modules/aws/asg/"
+  for_each = local.asgs
+  vpc_name = each.value.vpc_name
   # outputs
-  asg_vpc_id  = module.vpcs[each.value.vpc_name].vpc_id
-  asg_alb_arn = module.alb[each.value.vpc_name].lb_arn
+  vpc_id  = module.vpcs[each.value.vpc_name].vpc_id
+  alb_arn = module.alb[each.value.vpc_name].lb_arn
   #secure groups
   sg_jh_name           = each.value.sg_jh_name
   sg_jh_description    = each.value.sg_jh_description

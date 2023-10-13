@@ -29,24 +29,71 @@ locals {
 
       sg_app_name        = "SG_app"
       sg_app_description = "Allow http from alb and all from jumphost inbound traffic to apps"
-      sg_app_rules_ingress = {
-        jh_port         = 0
-        jh_protocol     = "-1"
-        jh_description  = "all from jumphost"
-        alb_port        = 80
-        alb_protocol    = "tcp"
-        alb_description = "http form ALB"
-      }
-      sg_app_rules_egress = {
-        ports = [
+      sg_app_rules = {
+        ingress = [
+          { #jh
+            port            = 0
+            protocol        = "-1"
+            description     = "all from jumphost"
+            security_groups = ["jh"]
+          },
+          { #alb
+            port            = 80
+            protocol        = "tcp"
+            description     = "http form ALB"
+            security_groups = [module.alb["bpzb-tf"].lb_arn]
+          }
+        ]
+        egress = [
           {
             port        = 0
             protocol    = "-1"
             description = "Allow all"
+            cidrs_ipv4  = ["0.0.0.0/0"]
           }
         ]
-        cidrs_ipv4 = ["0.0.0.0/0"]
       }
+      data_ubuntu = {
+        most_recent = true
+        owners      = ["099720109477"] # Canonical
+        filters = [
+          {
+            name   = "name"
+            values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64*"]
+          },
+          {
+            name   = "virtualization-type"
+            values = ["hvm"]
+          }
+        ]
+      }
+      app_lts = { #launch app tamplates
+        authz = {
+          name          = "authz-tf"
+          instance_type = "t2.micro"
+          key_name      = "bank_rsa"
+          user_data     = "./config_files/authz.yaml"
+        }
+        authn = {
+          name          = "authn-tf"
+          instance_type = "t2.micro"
+          key_name      = "bank_rsa"
+          user_data     = "./config_files/authn.yaml"
+        }
+        bank = {
+          name          = "bank-tf"
+          instance_type = "t2.micro"
+          key_name      = "bank_rsa"
+          user_data     = "./config_files/bank.yaml"
+        }
+        account = {
+          name          = "account-tf"
+          instance_type = "t2.micro"
+          key_name      = "bank_rsa"
+          user_data     = "./config_files/account.yaml"
+        }
+      }
+
 
     }
   }

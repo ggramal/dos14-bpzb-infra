@@ -87,15 +87,19 @@ module "asg" {
   for_each = local.asgs
   vpc_name = each.value.vpc_name
   # outputs
-  vpc_id  = module.vpcs[each.value.vpc_name].vpc_id
-  alb_arn = module.alb[each.value.vpc_name].lb_arn
-  #secure groups
-  sg_jh_name           = each.value.sg_jh_name
-  sg_jh_description    = each.value.sg_jh_description
-  sg_jh_rules_ingress  = each.value.sg_jh_rules_ingress
-  sg_jh_rules_egress   = each.value.sg_jh_rules_egress
-  sg_app_name          = each.value.sg_app_name
-  sg_app_description   = each.value.sg_app_description
-  sg_app_rules_ingress = each.value.sg_app_rules_ingress
-  sg_app_rules_egress  = each.value.sg_app_rules_egress
+  vpc_id = module.vpcs[each.value.vpc_name].vpc_id
+  #alb_arn = module.alb[each.value.vpc_name].lb_arn
+  # secure groups
+  sg_jh_name          = each.value.sg_jh_name
+  sg_jh_description   = each.value.sg_jh_description
+  sg_jh_rules_ingress = each.value.sg_jh_rules_ingress
+  sg_jh_rules_egress  = each.value.sg_jh_rules_egress
+  sg_app_name         = each.value.sg_app_name
+  sg_app_description  = each.value.sg_app_description
+  sg_app_rules        = each.value.sg_app_rules
+  # image data
+  data_ubuntu = each.value.data_ubuntu
+  # launch tamplates
+  app_lts = each.value.app_lts
+  #
 }

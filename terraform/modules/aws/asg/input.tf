@@ -6,9 +6,9 @@ variable "vpc_name" {
   description = "vpc name"
 }
 
-variable "alb_arn" {
-  description = "The ARN of the load balancer (matches id)"
-}
+#variable "alb_arn" {
+#  description = "The ARN of the load balancer (matches id)"
+#}
 
 variable "sg_jh_name" {
   description = "jumphost instance security group name"
@@ -68,35 +68,65 @@ variable "sg_app_description" {
   type        = string
 }
 
-variable "sg_app_rules_ingress" {
-  description = "ingress rules for app security group"
+variable "sg_app_rules" {
+  description = "rules for app security group"
   type = object(
     {
-      jh_port         = number
-      jh_protocol     = string
-      jh_description  = string
-      alb_port        = number
-      alb_protocol    = string
-      alb_description = string
+      ingress = list(
+        object(
+          {
+            port            = number
+            protocol        = string
+            description     = string
+            cidrs_ipv4      = optional(list(string))
+            security_groups = optional(list(string))
+          }
+        )
+      )
+      egress = list(
+        object(
+          {
+            port            = number
+            protocol        = string
+            description     = string
+            cidrs_ipv4      = optional(list(string))
+            security_groups = optional(list(string))
+          }
+        )
+    ) }
+  )
+}
+
+variable "data_ubuntu" {
+  description = ""
+  type = object(
+    {
+      most_recent = bool
+      owners      = list(string)
+      filters = list(
+        object(
+          {
+            name   = string
+            values = list(string)
+          }
+        )
+      )
     }
   )
 }
 
-variable "sg_app_rules_egress" {
-  description = "egress rules for app security group"
-  type = object(
-    {
-      ports = list(
-        object(
-          {
-            description = string
-            port        = number
-            protocol    = string
-          }
-        )
-      )
-      cidrs_ipv4 = list(string)
-    }
+variable "app_lts" {
+  description = ""
+  type = map(
+    object(
+      {
+        name          = string
+        instance_type = string
+        key_name      = string
+        user_data     = string
+      }
+    )
   )
 }
+
 

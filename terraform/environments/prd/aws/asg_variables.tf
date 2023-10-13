@@ -32,16 +32,17 @@ locals {
       sg_app_rules = {
         ingress = [
           { #jh
-            port            = 0
-            protocol        = "-1"
-            description     = "all from jumphost"
-            security_groups = ["jh"]
+            jh_key      = true
+            port        = 0
+            protocol    = "-1"
+            description = "all from jumphost"
           },
           { #alb
+            jh_key          = false
             port            = 80
             protocol        = "tcp"
             description     = "http form ALB"
-            security_groups = [module.alb["bpzb-tf"].lb_arn]
+            security_groups = [module.alb["bpzb-tf"].lb_sg_id]
           }
         ]
         egress = [

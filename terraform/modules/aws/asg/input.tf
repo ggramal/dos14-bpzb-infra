@@ -75,6 +75,8 @@ variable "sg_app_rules" {
       ingress = list(
         object(
           {
+            jh_key = bool
+            # default = false
             port            = number
             protocol        = string
             description     = string

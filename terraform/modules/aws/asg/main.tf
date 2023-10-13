@@ -44,7 +44,7 @@ resource "aws_security_group" "app" {
       from_port       = ingress.value.port
       to_port         = ingress.value.port
       protocol        = ingress.value.protocol
-      security_groups = ingress.value.security_groups == ["jh"] ? [aws_security_group.jh.id] : ingress.value.security_groups
+      security_groups = ingress.value.jh_key ? [aws_security_group.jh.id] : ingress.value.security_groups
     }
   }
 
@@ -59,9 +59,9 @@ resource "aws_security_group" "app" {
     }
   }
 
-  lifecycle {
-    create_before_destroy = true
-  }
+  #  lifecycle {
+  #create_before_destroy = true
+  #  }
   depends_on = [aws_security_group.jh]
 }
 

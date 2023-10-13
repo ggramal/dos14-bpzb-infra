@@ -92,6 +92,12 @@ locals {
           key_name      = "bank_rsa"
           user_data     = "./config_files/account.yaml"
         }
+        jump_host = {
+          name          = "jump-host"
+          instance_type = "t2.micro"
+          key_name      = "bank_rsa"
+          user_data     = "./config_files/jh.yaml"
+        }
       }
 
 

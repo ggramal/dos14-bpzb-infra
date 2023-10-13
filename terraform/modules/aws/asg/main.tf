@@ -91,3 +91,4 @@ resource "aws_launch_template" "app" {
   user_data = filebase64(each.value.user_data)
 }
 
+

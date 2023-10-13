@@ -5,26 +5,25 @@ locals {
       #asg_name         = "ASG"
       sg_jh_name        = "SG_jumphost"
       sg_jh_description = "Allow ssh inbound traffic to jumphost"
-      sg_jh_rules_ingress = {
-        ports = [
+      sg_jh_rules = {
+        ingress = [
           {
             port        = 22
             protocol    = "tcp"
             description = "ssh from internet"
+            cidrs_ipv4  = ["0.0.0.0/0"]
+            cidrs_ipv6  = ["::/0"]
           }
         ]
-        cidrs_ipv4 = ["0.0.0.0/0"]
-        cidrs_ipv6 = ["::/0"]
-      }
-      sg_jh_rules_egress = {
-        ports = [
+        egress = [
           {
             port        = 0
             protocol    = "-1"
             description = "Allow all"
+            cidrs_ipv4  = ["0.0.0.0/0"]
+            cidrs_ipv6  = ["::/0"]
           }
         ]
-        cidrs_ipv4 = ["0.0.0.0/0"]
       }
 
       sg_app_name        = "SG_app"

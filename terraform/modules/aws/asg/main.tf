@@ -4,26 +4,26 @@ resource "aws_security_group" "jh" {
   vpc_id      = var.vpc_id
 
   dynamic "ingress" {
-    for_each = var.sg_jh_rules_ingress.ports
+    for_each = var.sg_jh_rules.ingress
     content {
-      description      = var.sg_jh_rules_ingress.ports[ingress.key].description
-      from_port        = var.sg_jh_rules_ingress.ports[ingress.key].port
-      to_port          = var.sg_jh_rules_ingress.ports[ingress.key].port
-      protocol         = var.sg_jh_rules_ingress.ports[ingress.key].protocol
-      cidr_blocks      = var.sg_jh_rules_ingress.cidrs_ipv4
-      ipv6_cidr_blocks = var.sg_jh_rules_ingress.cidrs_ipv6
+      description      = ingress.value.description
+      from_port        = ingress.value.port
+      to_port          = ingress.value.port
+      protocol         = ingress.value.protocol
+      cidr_blocks      = ingress.value.cidrs_ipv4
+      ipv6_cidr_blocks = ingress.value.cidrs_ipv6
     }
   }
 
   dynamic "egress" {
-    for_each = var.sg_jh_rules_egress.ports
+    for_each = var.sg_jh_rules.egress
     content {
-      description      = var.sg_jh_rules_egress.ports[egress.key].description
-      from_port        = var.sg_jh_rules_egress.ports[egress.key].port
-      to_port          = var.sg_jh_rules_egress.ports[egress.key].port
-      protocol         = var.sg_jh_rules_egress.ports[egress.key].protocol
-      cidr_blocks      = var.sg_jh_rules_egress.cidrs_ipv4
-      ipv6_cidr_blocks = var.sg_jh_rules_egress.cidrs_ipv6
+      description      = egress.value.description
+      from_port        = egress.value.port
+      to_port          = egress.value.port
+      protocol         = egress.value.protocol
+      cidr_blocks      = egress.value.cidrs_ipv4
+      ipv6_cidr_blocks = egress.value.cidrs_ipv6
     }
   }
 
@@ -59,9 +59,9 @@ resource "aws_security_group" "app" {
     }
   }
 
-  #  lifecycle {
-  #create_before_destroy = true
-  #  }
+  lifecycle {
+    create_before_destroy = true
+  }
   depends_on = [aws_security_group.jh]
 }
 

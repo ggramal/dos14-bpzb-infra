@@ -6,10 +6,6 @@ variable "vpc_name" {
   description = "vpc name"
 }
 
-#variable "alb_arn" {
-#  description = "The ARN of the load balancer (matches id)"
-#}
-
 variable "sg_jh_name" {
   description = "jumphost instance security group name"
   type        = string
@@ -20,40 +16,32 @@ variable "sg_jh_description" {
   type        = string
 }
 
-variable "sg_jh_rules_ingress" {
-  description = "ingress rules for jumphost security group"
+variable "sg_jh_rules" {
+  description = "rules for jumphost security group"
   type = object(
     {
-      ports = list(
+      ingress = list(
         object(
           {
             port        = number
             protocol    = string
             description = string
+            cidrs_ipv4  = list(string)
+            cidrs_ipv6  = optional(list(string))
           }
         )
       )
-      cidrs_ipv4 = list(string)
-      cidrs_ipv6 = optional(list(string))
-    }
-  )
-}
-
-variable "sg_jh_rules_egress" {
-  description = "egress rules for jumphost security group"
-  type = object(
-    {
-      ports = list(
+      egress = list(
         object(
           {
             port        = number
-            description = string
             protocol    = string
+            description = string
+            cidrs_ipv4  = list(string)
+            cidrs_ipv6  = optional(list(string))
           }
         )
       )
-      cidrs_ipv4 = list(string)
-      cidrs_ipv6 = optional(list(string))
     }
   )
 }

@@ -84,7 +84,7 @@ resource "aws_launch_template" "app" {
   image_id               = data.aws_ami.ubuntu.id
   instance_type          = each.value.instance_type
   key_name               = each.value.key_name
-  vpc_security_group_ids = [aws_security_group.app.id]
+  vpc_security_group_ids = each.value.name == "jump_host" ? [aws_security_group.jh.id] : [aws_security_group.app.id]
   lifecycle {
     create_before_destroy = true
   }

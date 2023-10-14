@@ -106,7 +106,7 @@ variable "data_ubuntu" {
 }
 
 variable "app_lts" {
-  description = ""
+  description = "app launch tamplates"
   type = map(
     object(
       {
@@ -119,4 +119,21 @@ variable "app_lts" {
   )
 }
 
+variable "app_asgs" {
+  description = "app Auto Scaling groups"
+  type = map(
+    object(
+      {
+        name                    = string
+        min_size                = number
+        max_size                = number
+        desired_capacity        = number
+        vpc_zone_identifier     = list(string)
+        lt_app_name             = string
+        tag_key                 = string
+        tag_propagate_at_launch = bool
+      }
+    )
+  )
+}
 

@@ -91,4 +91,29 @@ resource "aws_launch_template" "app" {
   user_data = filebase64(each.value.user_data)
 }
 
+resource "aws_autoscaling_group" "bpzb" {
+  for_each         = var.app_asgs
+  name             = "${each.value.name}-v${aws_launch_template.app[each.value.lt_app_name].latest_version}"
+  min_size         = each.value.min_size
+  desired_capacity = each.value.desired_capacity
+  max_size         = each.value.max_size
+  #health_check_type    = 
+  #availability_zones = ["eu-west-3a"]
+  vpc_zone_identifier = each.value.vpc_zone_identifier
+  # target_group_arns    = [aws_lb_target_group.name.arn]
 
+  launch_template {
+    id      = aws_launch_template.app[each.value.lt_app_name].id
+    version = aws_launch_template.app[each.value.lt_app_name].latest_version
+  }
+
+  tag {
+    key                 = each.value.tag_key
+    value               = "${each.value.name}-lt_v${aws_launch_template.app[each.value.lt_app_name].latest_version}"
+    propagate_at_launch = each.value.tag_propagate_at_launch
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}

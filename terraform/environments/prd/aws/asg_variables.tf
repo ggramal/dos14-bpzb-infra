@@ -99,6 +99,58 @@ locals {
           user_data     = "./config_files/jh.yaml"
         }
       }
+      app_asgs = { # autoscaling gtoups
+        authz = {
+          name                    = "bpzb-authz-tf"
+          min_size                = 2
+          max_size                = 3
+          desired_capacity        = 2
+          vpc_zone_identifier     = module.vpcs["bpzb-tf"].vpc_private_subnet_ids
+          lt_app_name             = "authz"
+          tag_key                 = "Name"
+          tag_propagate_at_launch = true
+        }
+        authn = {
+          name                    = "bpzb-authn-tf"
+          min_size                = 2
+          max_size                = 3
+          desired_capacity        = 2
+          vpc_zone_identifier     = module.vpcs["bpzb-tf"].vpc_private_subnet_ids
+          lt_app_name             = "authn"
+          tag_key                 = "Name"
+          tag_propagate_at_launch = true
+        }
+        bank = {
+          name                    = "bpzb-bank-tf"
+          min_size                = 2
+          max_size                = 3
+          desired_capacity        = 2
+          vpc_zone_identifier     = module.vpcs["bpzb-tf"].vpc_private_subnet_ids
+          lt_app_name             = "bank"
+          tag_key                 = "Name"
+          tag_propagate_at_launch = true
+        }
+        account = {
+          name                    = "bpzb-account-tf"
+          min_size                = 2
+          max_size                = 3
+          desired_capacity        = 2
+          vpc_zone_identifier     = module.vpcs["bpzb-tf"].vpc_private_subnet_ids
+          lt_app_name             = "account"
+          tag_key                 = "Name"
+          tag_propagate_at_launch = true
+        }
+        jh = {
+          name                    = "bpzb-jh-tf"
+          min_size                = 1
+          max_size                = 2
+          desired_capacity        = 1
+          vpc_zone_identifier     = module.vpcs["bpzb-tf"].vpc_public_subnet_ids
+          lt_app_name             = "jump_host"
+          tag_key                 = "Name"
+          tag_propagate_at_launch = true
+        }
+      }
 
 
     }

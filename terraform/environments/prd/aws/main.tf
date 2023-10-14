@@ -100,5 +100,7 @@ module "asg" {
   data_ubuntu = each.value.data_ubuntu
   # launch tamplates
   app_lts = each.value.app_lts
-  #
+  # asg
+  app_asgs = each.value.app_asgs
+
 }

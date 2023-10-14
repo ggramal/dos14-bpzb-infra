@@ -86,7 +86,7 @@ locals {
           name        = "authz"
           priority    = 2
           type        = "forward"
-          path_values = ["/api/v1/users/*", "/api/v1/organisations/*", "/api/v1/users", "/api/v1/organisations", "/api/v1/?*/authz/?*"]
+          path_values = ["/api/v1/authz/health_check", "/api/v1/users*", "/api/v1/organisations*", "/api/v1/?*/authz/?*"]
         },
         {
           name        = "authn"
@@ -98,7 +98,7 @@ locals {
           name        = "bank"
           priority    = 4
           type        = "forward"
-          path_values = ["/api/v1/bank/health_check", "/api/v1/credits/*", "/api/v1/deposits/*", "/api/v1/deposits", "/api/v1/credits"]
+          path_values = ["/api/v1/bank/health_check", "/api/v1/credits*", "/api/v1/deposits*"]
         },
         {
           name        = "account"

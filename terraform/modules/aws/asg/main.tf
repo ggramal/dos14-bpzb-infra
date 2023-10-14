@@ -97,10 +97,9 @@ resource "aws_autoscaling_group" "bpzb" {
   min_size         = each.value.min_size
   desired_capacity = each.value.desired_capacity
   max_size         = each.value.max_size
-  #health_check_type    = 
-  #availability_zones = ["eu-west-3a"]
+  #health_check_type  = 
   vpc_zone_identifier = each.value.vpc_zone_identifier
-  # target_group_arns    = [aws_lb_target_group.name.arn]
+  target_group_arns   = [each.value.target_group_arn]
 
   launch_template {
     id      = aws_launch_template.app[each.value.lt_app_name].id

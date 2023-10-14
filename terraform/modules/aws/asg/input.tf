@@ -130,6 +130,7 @@ variable "app_asgs" {
         desired_capacity        = number
         vpc_zone_identifier     = list(string)
         lt_app_name             = string
+        target_group_arn        = optional(string)
         tag_key                 = string
         tag_propagate_at_launch = bool
       }

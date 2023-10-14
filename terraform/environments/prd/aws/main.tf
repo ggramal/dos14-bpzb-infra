@@ -88,7 +88,6 @@ module "asg" {
   vpc_name = each.value.vpc_name
   # outputs
   vpc_id = module.vpcs[each.value.vpc_name].vpc_id
-  #alb_arn = module.alb[each.value.vpc_name].lb_arn
   # secure groups
   sg_jh_name         = each.value.sg_jh_name
   sg_jh_description  = each.value.sg_jh_description
@@ -100,7 +99,7 @@ module "asg" {
   data_ubuntu = each.value.data_ubuntu
   # launch tamplates
   app_lts = each.value.app_lts
-  # asg
+  # asgs
   app_asgs = each.value.app_asgs
 
 }

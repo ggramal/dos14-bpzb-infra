@@ -107,6 +107,7 @@ locals {
           desired_capacity        = 2
           vpc_zone_identifier     = module.vpcs["bpzb-tf"].vpc_private_subnet_ids
           lt_app_name             = "authz"
+          target_group_arn        = module.alb["bpzb-tf"].lb_tg["authz"].arn
           tag_key                 = "Name"
           tag_propagate_at_launch = true
         }
@@ -117,6 +118,7 @@ locals {
           desired_capacity        = 2
           vpc_zone_identifier     = module.vpcs["bpzb-tf"].vpc_private_subnet_ids
           lt_app_name             = "authn"
+          target_group_arn        = module.alb["bpzb-tf"].lb_tg["authn"].arn
           tag_key                 = "Name"
           tag_propagate_at_launch = true
         }
@@ -127,6 +129,7 @@ locals {
           desired_capacity        = 2
           vpc_zone_identifier     = module.vpcs["bpzb-tf"].vpc_private_subnet_ids
           lt_app_name             = "bank"
+          target_group_arn        = module.alb["bpzb-tf"].lb_tg["bank"].arn
           tag_key                 = "Name"
           tag_propagate_at_launch = true
         }
@@ -137,6 +140,7 @@ locals {
           desired_capacity        = 2
           vpc_zone_identifier     = module.vpcs["bpzb-tf"].vpc_private_subnet_ids
           lt_app_name             = "account"
+          target_group_arn        = module.alb["bpzb-tf"].lb_tg["account"].arn
           tag_key                 = "Name"
           tag_propagate_at_launch = true
         }
@@ -147,6 +151,7 @@ locals {
           desired_capacity        = 1
           vpc_zone_identifier     = module.vpcs["bpzb-tf"].vpc_public_subnet_ids
           lt_app_name             = "jump_host"
+          target_group_arn        = ""
           tag_key                 = "Name"
           tag_propagate_at_launch = true
         }

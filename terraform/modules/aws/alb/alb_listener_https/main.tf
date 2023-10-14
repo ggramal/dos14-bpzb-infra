@@ -7,7 +7,7 @@ resource "aws_lb_listener" "https" {
 
   default_action {
     type             = var.alb_listener_443["action_type"]
-    target_group_arn = var.alb_tg["authz"].arn
+    target_group_arn = var.alb_tg["account"].arn
   }
 }
 

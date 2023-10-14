@@ -7,4 +7,5 @@ packages:
 runcmd:
   - pip install ansible
   - cd /tmp/ && git clone --branch features-hw-24-26 https://github.com/CyberCuCuber/dos14-polikarpov_ruslan-gitflow.git authn
-  - cd /tmp/authn/ansible && ansible-playbook -i "127.0.0.1," playbook.yaml -c local
+  - cd /tmp/authn/ansible && ansible-playbook playbook.yaml -i localhost, -c local
+

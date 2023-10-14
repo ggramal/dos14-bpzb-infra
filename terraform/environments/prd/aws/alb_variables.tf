@@ -92,13 +92,13 @@ locals {
           name        = "authn"
           priority    = 3
           type        = "forward"
-          path_values = ["/api/v1/identity/validate", "/api/v1/identity/login", "/api/v1/identity"]
+          path_values = ["/api/v1/authn/health_check", "/api/v1/identity/validate", "/api/v1/identity/login", "/api/v1/identity"]
         },
         {
           name        = "bank"
           priority    = 4
           type        = "forward"
-          path_values = ["/api/v1/credits/*", "/api/v1/deposits/*", "/api/v1/deposits", "/api/v1/credits"]
+          path_values = ["/api/v1/bank/health_check", "/api/v1/credits/*", "/api/v1/deposits/*", "/api/v1/deposits", "/api/v1/credits"]
         },
         {
           name        = "account"

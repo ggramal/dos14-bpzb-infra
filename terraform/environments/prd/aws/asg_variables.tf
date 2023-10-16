@@ -81,10 +81,11 @@ locals {
           user_data     = "./config_files/authn.yaml"
         }
         bank = {
-          name          = "bank-tf"
-          instance_type = "t2.micro"
-          key_name      = "bank_rsa"
-          user_data     = "./config_files/bank.yaml"
+          name                      = "bank-tf"
+          instance_type             = "t2.micro"
+          key_name                  = "bank_rsa"
+          user_data                 = "./config_files/bank.yaml"
+          iam_instance_profile_name = "ec2-s3"
         }
         account = {
           name          = "account-tf"

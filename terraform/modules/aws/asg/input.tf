@@ -110,10 +110,11 @@ variable "app_lts" {
   type = map(
     object(
       {
-        name          = string
-        instance_type = string
-        key_name      = string
-        user_data     = string
+        name                      = string
+        instance_type             = string
+        key_name                  = string
+        user_data                 = string
+        iam_instance_profile_name = optional(string)
       }
     )
   )

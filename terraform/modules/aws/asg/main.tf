@@ -85,6 +85,9 @@ resource "aws_launch_template" "app" {
   instance_type          = each.value.instance_type
   key_name               = each.value.key_name
   vpc_security_group_ids = each.value.name == "jump_host" ? [aws_security_group.jh.id] : [aws_security_group.app.id]
+  iam_instance_profile {
+    name = each.value.name != "bank-tf" ? null : each.value.iam_instance_profile_name
+  }
   lifecycle {
     create_before_destroy = true
   }

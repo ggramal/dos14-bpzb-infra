@@ -152,7 +152,6 @@ locals {
           desired_capacity        = 1
           vpc_zone_identifier     = module.vpcs["bpzb-tf"].vpc_public_subnet_ids
           lt_app_name             = "jump_host"
-          target_group_arn        = ""
           tag_key                 = "Name"
           tag_propagate_at_launch = true
         }

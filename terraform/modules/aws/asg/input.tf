@@ -63,8 +63,7 @@ variable "sg_app_rules" {
       ingress = list(
         object(
           {
-            jh_key = bool
-            # default = false
+            jh_key          = optional(bool, false)
             port            = number
             protocol        = string
             description     = string
@@ -114,7 +113,7 @@ variable "app_lts" {
         instance_type             = string
         key_name                  = string
         user_data                 = string
-        iam_instance_profile_name = optional(string)
+        iam_instance_profile_name = optional(string, null)
       }
     )
   )
@@ -131,7 +130,7 @@ variable "app_asgs" {
         desired_capacity        = number
         vpc_zone_identifier     = list(string)
         lt_app_name             = string
-        target_group_arn        = optional(string)
+        target_group_arn        = optional(string, "")
         tag_key                 = string
         tag_propagate_at_launch = bool
       }

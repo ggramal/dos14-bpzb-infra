@@ -2,56 +2,59 @@ locals {
   asgs = {
     bpzb-tf = {
       vpc_name = "bpzb-tf"
-      #asg_name         = "ASG"
-      sg_jh_name        = "SG_jumphost"
-      sg_jh_description = "Allow ssh inbound traffic to jumphost"
-      sg_jh_rules = {
-        ingress = [
-          {
-            port        = 22
-            protocol    = "tcp"
-            description = "ssh from internet"
-            cidrs_ipv4  = ["0.0.0.0/0"]
-            cidrs_ipv6  = ["::/0"]
+      sgs = {
+        jumphost = {
+          name        = "SG_jumphost"
+          description = "Allow ssh inbound traffic to jumphost"
+          rules = {
+            ingress = [
+              {
+                port        = 22
+                protocol    = "tcp"
+                description = "ssh from internet"
+                cidrs_ipv4  = ["0.0.0.0/0"]
+                cidrs_ipv6  = ["::/0"]
+              }
+            ]
+            egress = [
+              {
+                port        = 0
+                protocol    = "-1"
+                description = "Allow all"
+                cidrs_ipv4  = ["0.0.0.0/0"]
+                cidrs_ipv6  = ["::/0"]
+              }
+            ]
           }
-        ]
-        egress = [
-          {
-            port        = 0
-            protocol    = "-1"
-            description = "Allow all"
-            cidrs_ipv4  = ["0.0.0.0/0"]
-            cidrs_ipv6  = ["::/0"]
+        }
+        app = {
+          name        = "SG_app"
+          description = "Allow http from alb and all from jumphost inbound traffic to apps"
+          rules = {
+            ingress = [
+              { #jh
+                jh_key      = true
+                port        = 0
+                protocol    = "-1"
+                description = "all from jumphost"
+              },
+              { #alb
+                port            = 80
+                protocol        = "tcp"
+                description     = "http form ALB"
+                security_groups = [module.alb["bpzb-tf"].lb_sg_id]
+              }
+            ]
+            egress = [
+              {
+                port        = 0
+                protocol    = "-1"
+                description = "Allow all"
+                cidrs_ipv4  = ["0.0.0.0/0"]
+              }
+            ]
           }
-        ]
-      }
-
-      sg_app_name        = "SG_app"
-      sg_app_description = "Allow http from alb and all from jumphost inbound traffic to apps"
-      sg_app_rules = {
-        ingress = [
-          { #jh
-            jh_key      = true
-            port        = 0
-            protocol    = "-1"
-            description = "all from jumphost"
-          },
-          { #alb
-            jh_key          = false
-            port            = 80
-            protocol        = "tcp"
-            description     = "http form ALB"
-            security_groups = [module.alb["bpzb-tf"].lb_sg_id]
-          }
-        ]
-        egress = [
-          {
-            port        = 0
-            protocol    = "-1"
-            description = "Allow all"
-            cidrs_ipv4  = ["0.0.0.0/0"]
-          }
-        ]
+        }
       }
       data_ubuntu = {
         most_recent = true
@@ -156,8 +159,6 @@ locals {
           tag_propagate_at_launch = true
         }
       }
-
-
     }
   }
 }

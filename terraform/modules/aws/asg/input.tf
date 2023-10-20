@@ -6,83 +6,76 @@ variable "vpc_name" {
   description = "vpc name"
 }
 
-variable "sg_jh_name" {
-  description = "jumphost instance security group name"
-  type        = string
-}
-
-variable "sg_jh_description" {
-  description = "description for security group jumphost instance"
-  type        = string
-}
-
-variable "sg_jh_rules" {
-  description = "rules for jumphost security group"
+variable "sgs" {
+  description = "rules for security groups"
   type = object(
     {
-      ingress = list(
-        object(
-          {
-            port        = number
-            protocol    = string
-            description = string
-            cidrs_ipv4  = list(string)
-            cidrs_ipv6  = optional(list(string))
-          }
-        )
+      jumphost = object(
+        {
+          name        = string
+          description = string
+          rules = object(
+            {
+              ingress = list(
+                object(
+                  {
+                    port        = number
+                    protocol    = string
+                    description = string
+                    cidrs_ipv4  = list(string)
+                    cidrs_ipv6  = optional(list(string))
+                  }
+                )
+              )
+              egress = list(
+                object(
+                  {
+                    port        = number
+                    protocol    = string
+                    description = string
+                    cidrs_ipv4  = list(string)
+                    cidrs_ipv6  = optional(list(string))
+                  }
+                )
+              )
+            }
+          )
+        }
       )
-      egress = list(
-        object(
-          {
-            port        = number
-            protocol    = string
-            description = string
-            cidrs_ipv4  = list(string)
-            cidrs_ipv6  = optional(list(string))
-          }
-        )
+      app = object(
+        {
+          name        = string
+          description = string
+          rules = object(
+            {
+              ingress = list(
+                object(
+                  {
+                    jh_key          = optional(bool, false)
+                    port            = number
+                    protocol        = string
+                    description     = string
+                    cidrs_ipv4      = optional(list(string))
+                    security_groups = optional(list(string))
+                  }
+                )
+              )
+              egress = list(
+                object(
+                  {
+                    port            = number
+                    protocol        = string
+                    description     = string
+                    cidrs_ipv4      = optional(list(string))
+                    security_groups = optional(list(string))
+                  }
+                )
+              )
+            }
+          )
+        }
       )
     }
-  )
-}
-
-variable "sg_app_name" {
-  description = "app instance security group name"
-  type        = string
-}
-
-variable "sg_app_description" {
-  description = "description for security group app instance"
-  type        = string
-}
-
-variable "sg_app_rules" {
-  description = "rules for app security group"
-  type = object(
-    {
-      ingress = list(
-        object(
-          {
-            jh_key          = optional(bool, false)
-            port            = number
-            protocol        = string
-            description     = string
-            cidrs_ipv4      = optional(list(string))
-            security_groups = optional(list(string))
-          }
-        )
-      )
-      egress = list(
-        object(
-          {
-            port            = number
-            protocol        = string
-            description     = string
-            cidrs_ipv4      = optional(list(string))
-            security_groups = optional(list(string))
-          }
-        )
-    ) }
   )
 }
 

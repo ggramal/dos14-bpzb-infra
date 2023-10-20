@@ -89,12 +89,7 @@ module "asg" {
   # outputs
   vpc_id = module.vpcs[each.value.vpc_name].vpc_id
   # secure groups
-  sg_jh_name         = each.value.sg_jh_name
-  sg_jh_description  = each.value.sg_jh_description
-  sg_jh_rules        = each.value.sg_jh_rules
-  sg_app_name        = each.value.sg_app_name
-  sg_app_description = each.value.sg_app_description
-  sg_app_rules       = each.value.sg_app_rules
+  sgs = each.value.sgs
   # image data
   data_ubuntu = each.value.data_ubuntu
   # launch tamplates

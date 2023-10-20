@@ -1,10 +1,10 @@
 resource "aws_security_group" "jh" {
-  name        = "${var.sg_jh_name}-${var.vpc_name}"
-  description = var.sg_jh_description
+  name        = "${var.sgs.jumphost.name}-${var.vpc_name}"
+  description = var.sgs.jumphost.description
   vpc_id      = var.vpc_id
 
   dynamic "ingress" {
-    for_each = var.sg_jh_rules.ingress
+    for_each = var.sgs.jumphost.rules.ingress
     content {
       description      = ingress.value.description
       from_port        = ingress.value.port
@@ -16,7 +16,7 @@ resource "aws_security_group" "jh" {
   }
 
   dynamic "egress" {
-    for_each = var.sg_jh_rules.egress
+    for_each = var.sgs.jumphost.rules.egress
     content {
       description      = egress.value.description
       from_port        = egress.value.port
@@ -33,12 +33,12 @@ resource "aws_security_group" "jh" {
 }
 
 resource "aws_security_group" "app" {
-  name        = "${var.sg_app_name}-${var.vpc_name}"
-  description = var.sg_app_description
+  name        = "${var.sgs.app.name}-${var.vpc_name}"
+  description = var.sgs.app.description
   vpc_id      = var.vpc_id
 
   dynamic "ingress" {
-    for_each = var.sg_app_rules.ingress
+    for_each = var.sgs.app.rules.ingress
     content {
       description     = ingress.value.description
       from_port       = ingress.value.port
@@ -49,7 +49,7 @@ resource "aws_security_group" "app" {
   }
 
   dynamic "egress" {
-    for_each = var.sg_app_rules.egress
+    for_each = var.sgs.app.rules.egress
     content {
       description = egress.value.description
       from_port   = egress.value.port

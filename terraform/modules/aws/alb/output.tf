@@ -13,6 +13,11 @@ output "lb_arn" {
   value       = aws_lb.bpzb.arn
 }
 
+output "lb_sg_id" {
+  description = "id of alb security group"
+  value       = aws_security_group.alb.id
+}
+
 output "lb_tg" {
   description = "alb target group"
   value       = aws_lb_target_group.alb

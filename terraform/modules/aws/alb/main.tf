@@ -9,7 +9,7 @@ resource "aws_lb" "bpzb" {
 }
 
 resource "aws_security_group" "alb" {
-  name        = "${var.sg_alb_name}-${var.alb_name}-${var.alb_vpc_name}"
+  name        = "${var.sg_alb_name}-${var.alb_vpc_name}"
   description = var.sg_alb_description
   vpc_id      = var.alb_vpc_id
 

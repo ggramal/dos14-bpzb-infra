@@ -81,3 +81,20 @@ module "route53" {
   cert_domain_name       = each.value.domain_name
   cert_validation_method = each.value.validation_method
 }
+
+module "asg" {
+  source   = "../../../modules/aws/asg/"
+  for_each = local.asgs
+  vpc_name = each.value.vpc_name
+  # outputs
+  vpc_id = module.vpcs[each.value.vpc_name].vpc_id
+  # secure groups
+  sgs = each.value.sgs
+  # image data
+  data_ubuntu = each.value.data_ubuntu
+  # launch tamplates
+  app_lts = each.value.app_lts
+  # asgs
+  app_asgs = each.value.app_asgs
+
+}

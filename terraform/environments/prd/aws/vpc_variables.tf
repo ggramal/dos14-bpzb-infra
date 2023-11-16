@@ -53,6 +53,18 @@ locals {
         }
 
       }
+      rds_subnets = {
+        rds_subnet_1 = {
+          name              = "bpzb_rds_1-tf"
+          cidr              = "10.100.50.0/24"
+          availability_zone = "eu-west-3a"
+        }
+        rds_subnet_2 = {
+          name              = "bpzb_rds_2-tf"
+          cidr              = "10.100.60.0/24"
+          availability_zone = "eu-west-3b"
+        }
+      }
     }
   }
 }

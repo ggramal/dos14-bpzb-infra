@@ -12,3 +12,7 @@ output "vpc_private_subnet_ids" {
   description = "IDs of private subnets"
   value       = [for subnet in aws_subnet.private : subnet.id]
 }
+
+output "rds_subnet_ids" {
+  value = [for rds_subnet in aws_subnet.private : rds_subnet.id]
+}

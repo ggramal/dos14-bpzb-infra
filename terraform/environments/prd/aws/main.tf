@@ -29,6 +29,7 @@ module "vpcs" {
   subnets_private      = each.value.subnets_private
   internet_gw_name     = each.value.internet_gw_name
   nat_gws              = each.value.nat_gws
+  rds_subnets          = each.value.rds_subnets
 }
 
 module "alb" {
@@ -97,4 +98,25 @@ module "asg" {
   # asgs
   app_asgs = each.value.app_asgs
 
+}
+
+module "bpzb_rds" {
+  source              = "../../../modules/aws/rds/"
+  for_each            = local.vpcs
+  vpc_id              = module.vpcs[each.value.name].vpc_id
+  db_subnet_name      = local.bpzb_rds.db_subnet_name
+  publicly_accessible = local.bpzb_rds.publicly_accessible
+  engine_version      = local.bpzb_rds.engine_version
+  name                = local.bpzb_rds.name
+  engine              = local.bpzb_rds.engine
+  storage             = local.bpzb_rds.storage
+  instance_class      = local.bpzb_rds.instance_class
+  username            = local.bpzb_rds.username
+  password            = random_password.password.result
+  final_snap          = local.bpzb_rds.final_snap
+  sg_name             = local.bpzb_rds.sg_name
+#  rds_subnet_ids      = module.vpcs.rds_subnet_ids
+  rds_subnet_ids      = module.vpcs[each.value.name].rds_subnet_ids
+  rds_sg              = local.sg_rds
+  identifier          = local.bpzb_rds.identifier
 }
